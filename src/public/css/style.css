@@ -1,0 +1,95 @@
+*{
+  font-family: monospace;
+  list-style: none;
+}
+p{
+  margin: 0;
+}
+h1{
+  background-color: blueviolet;
+  padding: 10px;
+  display: inline-block;
+  color: white;
+  border-radius: 10px;
+}
+button{
+  background-color: blueviolet;
+  padding: 10px;
+  width: 422px;
+  color: white;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid blueviolet;
+  cursor: pointer;
+}
+h3{
+  display: inline-block;
+  color: black;
+  border-radius: 10px;
+  margin: 15px 0 0 0;
+  width: 385px;
+}
+input{
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid gray;
+  padding: 10px;
+  width: 400px;
+}
+table{
+  border-radius: 10px !important;
+  box-shadow: 0 0 1px 1px gray;
+  width:422px;
+}
+table, th, td {
+  border-collapse: collapse;
+  padding: 10px;
+}
+table tr td{
+  text-align: center;
+}
+
+/* chat style */
+#chat{
+  padding: 10px;
+  height: 300px;
+  width: 402px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  overflow-y: auto;
+}
+ul{
+  margin: 0;
+  padding: 0;
+}
+ul li div{
+  background-color: blueviolet;
+  color: white;
+  border-radius: 10px;
+  width: 65%;
+  margin: 0 0 10px 0;
+  padding: 10px;
+}
+ul li div h4{
+  margin: 0;
+  padding: 1px;
+}
+ul li div h5{
+  margin: 0;
+  padding: 1px;
+  border-bottom: 1px solid white;
+}
+#chatForm{
+  display: flex;
+  flex-direction: column;
+}
+#chatForm input{
+  margin-bottom: 10px;
+}
+#chatForm div button{
+  width: 75px;
+}
+#chatForm div input{
+  width: 320px;
+}
