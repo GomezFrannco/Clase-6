@@ -5,7 +5,8 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { engine } = require("express-handlebars");
-const { Data } = require("./src/controller/data.js");
+const { db } = require("./src/controller/products.js");
+const { dbLite } = require("./src/controller/messages.js");
 
 class App {
   constructor() {
@@ -31,7 +32,7 @@ class App {
     );
   }
   settings() {
-    this.app.set("port", 8080);
+    this.app.set("port", process.env.PORT || 8080);
     this.app.set("view engine", "hbs");
     this.app.set("views", "./src/public/views");
   }
@@ -41,37 +42,40 @@ class App {
     this.app.use(express.static("./src/public"));
   }
   socket() {
-    const fs = new Data();
-    const list = fs.read();
-    const messagesHistory = [];
-  // console.log(`[${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`)
     this.io.on("connection", (socket) => {
+      // User connection mid
       console.log("User connected to server 😲");
-      socket.emit("list", list);
-      this.io.sockets.emit('toChat', messagesHistory)
       socket.on("disconnect", () => {
         console.log("User disconnected from server 😲");
       });
-
-      // list socket
+      // db script
+      db.createTable();
+      dbLite.createTable();
+      // db mid
+      dbLite.readMessages().then((val) => {
+        this.io.sockets.emit("toChat", val);
+      });
+      db.getProducts().then((val) => {
+        socket.emit("list", val);
+      });
+      // product save on db & listed product socket emit
       socket.on("product", (p) => {
-        list.push(p);
-        fs.save(p);
+        db.setProduct(p); // save the product on mySQL db
         this.io.sockets.emit("listed", p);
       });
-
       // chat socket
-      socket.on('message', (content)=> {
+      socket.on("message", (content) => {
         const date = new Date();
-        let messageDate = `[${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
+        let messageDate = `[${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
         content.date = messageDate;
-        messagesHistory.push(content)
-        this.io.sockets.emit('toChat', messagesHistory)
+        dbLite.saveMessage(content);
+        dbLite.readMessages().then((val) => {
+          this.io.sockets.emit("toChat", val);
+        });
       });
     });
   }
   appRoutes() {
-    const fs = new Data();
     this.app.get("/", (req, res) => {
       try {
         res.status(200).render("main");
@@ -80,8 +84,11 @@ class App {
       }
     });
     this.app.get("/products", (req, res) => {
-      const data = fs.read();
-      res.json(data);
+      try {
+        db.getProducts().then((val) => res.status(200).json(val));
+      } catch (e) {
+        res.status(500).json({ error: "Something unexpected happened!" });
+      }
     });
   }
   listen() {
