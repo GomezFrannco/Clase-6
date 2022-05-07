@@ -35,3 +35,15 @@ socket.on("toChat", (content) => {
   });
   DOM.$messages.innerHTML = message;
 });
+
+//  products test
+let url = 'http://localhost:8080/api/productos-test'
+async function getTest(url) {
+  const response = await fetch(url);
+  let data = await response.json();
+  data.forEach(product => {
+    DOM.$test.innerHTML += `<tr><td>${product.nombre}</td><td>${product.precio}</td><td>${product.thumbnail}</td></tr>`
+  });
+}
+
+getTest(url)

@@ -7,6 +7,8 @@ const { Server } = require("socket.io");
 const { engine } = require("express-handlebars");
 const { db } = require("./src/controller/products.js");
 const { dbLite } = require("./src/controller/messages.js");
+const apiRouter = require("./src/routes/api.routes.js");
+const indexRouter = require("./src/routes/index.routes.js");
 
 class App {
   constructor() {
@@ -17,7 +19,7 @@ class App {
     this.settings();
     this.middlewares();
     this.socket();
-    this.appRoutes();
+    this.routes();
   }
 
   viewEngine() {
@@ -75,21 +77,9 @@ class App {
       });
     });
   }
-  appRoutes() {
-    this.app.get("/", (req, res) => {
-      try {
-        res.status(200).render("main");
-      } catch (e) {
-        res.status(200).render("emptyList");
-      }
-    });
-    this.app.get("/products", (req, res) => {
-      try {
-        db.getProducts().then((val) => res.status(200).json(val));
-      } catch (e) {
-        res.status(500).json({ error: "Something unexpected happened!" });
-      }
-    });
+  routes() {
+    this.app.use("/", indexRouter);
+    this.app.use("/api", apiRouter);
   }
   listen() {
     this.http.listen(this.app.get("port"), () => {
