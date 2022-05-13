@@ -1,6 +1,6 @@
-# Desafío 6 (Modificado al desafío 11)
+# Desafío 6 (Modificado al desafío 12)
 
-* En esta entrega he utilizado faker.js para crear una tabla con 5 productos ficticios. Se ha utilizado fetch API para obtener los datos generados en el servidor por faker.
+* En esta entrega (n°12) he utilizado **connect-mongo** y **express-session** para crear cookies de sesión y almacenarla en Mongo Atlas.
 
 ## Websockets
 
@@ -10,5 +10,7 @@
 * MySQL
 * SQLite3
 * Faker.js
+* Connect-mongo
+* Express-session
 
  > La aplicación cuenta con frontend
