@@ -2,6 +2,8 @@
  *  Server modules
  */
 const express = require("express");
+const session = require("express-session");
+const mongoStore = require("connect-mongo");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { engine } = require("express-handlebars");
@@ -9,6 +11,7 @@ const { db } = require("./src/controller/products.js");
 const { dbLite } = require("./src/controller/messages.js");
 const apiRouter = require("./src/routes/api.routes.js");
 const indexRouter = require("./src/routes/index.routes.js");
+const sessionRouter = require("./src/routes/session.routes.js");
 
 class App {
   constructor() {
@@ -21,7 +24,6 @@ class App {
     this.socket();
     this.routes();
   }
-
   viewEngine() {
     this.app.engine(
       "hbs",
@@ -42,6 +44,23 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(express.static("./src/public"));
+    this.app.use(
+      session({
+        store: mongoStore.create({
+          mongoUrl: process.env.MONGO_URI,
+          options: {
+            userNewUrlParser: true,
+            useUnifiedTopology: true,
+          },
+        }),
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+          maxAge: 60000,
+        },
+      })
+    );
   }
   socket() {
     this.io.on("connection", (socket) => {
@@ -80,6 +99,7 @@ class App {
   routes() {
     this.app.use("/", indexRouter);
     this.app.use("/api", apiRouter);
+    this.app.use("/", sessionRouter);
   }
   listen() {
     this.http.listen(this.app.get("port"), () => {
