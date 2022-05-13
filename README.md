@@ -1,6 +1,6 @@
 # Desafío 6 (Modificado al desafío 12)
 
-* En esta entrega (n°12) he utilizado **connect-mongo** y **express-session** para crear cookies de sesión y almacenarla en Mongo Atlas.
+* En esta entrega (n°12) he utilizado **connect-mongo** y **express-session** para crear cookies de sesión y almacenarlas en **Mongo Atlas**.
 
 ## Websockets
 
@@ -13,4 +13,12 @@
 * Connect-mongo
 * Express-session
 
- > La aplicación cuenta con frontend
+## Preview
+
+* Login
+![login](assets/login_preview.png)
+* Main
+![main](assets/main_preview.png)
+* Logout
+![logout](assets/logout_preview.png)
+
