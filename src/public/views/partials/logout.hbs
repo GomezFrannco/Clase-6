@@ -1,0 +1,14 @@
+<div class="content">
+  <div id="banner">
+    <h1>Goodbye <span>{{userName}}</span></h1>
+  </div>
+</div>
+<script>
+  const redirect = function (time) {
+  setTimeout(() => {
+    window.location = "http://localhost:8080/login";
+  }, time);
+};
+
+redirect(2000)
+</script>
