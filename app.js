@@ -14,9 +14,10 @@ const indexRouter = require("./src/routes/index.routes.js");
 const sessionRouter = require("./src/routes/session.routes.js");
 
 class App {
-  constructor() {
+  constructor(port) {
     this.app = express();
     this.http = createServer(this.app);
+    this.port = Number(port);
     this.io = new Server(this.http);
     this.viewEngine();
     this.settings();
@@ -36,7 +37,7 @@ class App {
     );
   }
   settings() {
-    this.app.set("port", process.env.PORT || 8080);
+    this.app.set("port", this.port);
     this.app.set("view engine", "hbs");
     this.app.set("views", "./src/public/views");
   }
@@ -65,7 +66,7 @@ class App {
   socket() {
     this.io.on("connection", (socket) => {
       // User connection mid
-      console.log("User connected to server 😲");
+      console.log("User connected to server 🚀🚀");
       socket.on("disconnect", () => {
         console.log("User disconnected from server 😲");
       });
