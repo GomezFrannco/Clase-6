@@ -1,13 +1,12 @@
-# Desafío 6 (Modificado al desafío 12)
+# Desafío 6 (Modificado al desafío 17)
 
-* En esta entrega (n°12) he utilizado **connect-mongo** y **express-session** para crear cookies de sesión y almacenarlas en **Mongo Atlas**.
+* En esta entrega he realizado un branch llamado heroku con el motivo de modificar el código y desplegarlo en Heroku.
 
 ## Websockets
 
 * Socket.IO
 * Express.js
 * Handlebars.js
-* MySQL
 * SQLite3
 * Faker.js
 * Connect-mongo
