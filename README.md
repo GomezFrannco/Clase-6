@@ -13,12 +13,10 @@
 * Connect-mongo
 * Express-session
 
-## Preview
+## Heroku logs preview
 
-* Login
-![login](assets/login_preview.png)
-* Main
-![main](assets/main_preview.png)
-* Logout
-![logout](assets/logout_preview.png)
+* Console
+![Console](assets/console.png)
+* Heroku
+![Heroku](assets/heroku.png)
 
