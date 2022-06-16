@@ -2,13 +2,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const config = {
-  client: "mysql2",
+  client: "better-sqlite3",
   connection: {
-    host: process.env.HOST_DB,
-    user: process.env.USER_DB,
-    password: process.env.PASSWORD_DB,
-    database: process.env.DATABASE,
+    filename: "./src/db/mySQL/productos.sqlite"
   },
+  useNullAsDefault: true,
 };
 
 module.exports = { config };
