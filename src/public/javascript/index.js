@@ -37,7 +37,7 @@ socket.on("toChat", (content) => {
 });
 
 //  products test
-let url = 'http://localhost:8080/api/productos-test'
+let url = 'https://clase-17.herokuapp.com/api/productos-test'
 async function getTest(url) {
   const response = await fetch(url);
   let data = await response.json();
